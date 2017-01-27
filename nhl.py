@@ -1,3 +1,4 @@
+import argparse
 import csv
 
 import utils
@@ -25,4 +26,13 @@ def team_games_in_week(st_date, end_date):
     for team in sorted_counts:
       print '{}: {}'.format(team[0], team[1])
 
-team_games_in_week('2017-01-31', '2017-02-05')
+parser = argparse.ArgumentParser(description='Run some useful commands')
+
+parser.add_argument('-s', '--start', help='The start date to count games for', required=True)
+parser.add_argument('-e', '--end', help='The end date to count games for', required=True)
+args = parser.parse_args()
+
+try:
+  team_games_in_week(args.start, args.end)
+except ValueError:
+  print '> ERROR: Invalid date format. Required format: "YYYY-MM-DD"'
